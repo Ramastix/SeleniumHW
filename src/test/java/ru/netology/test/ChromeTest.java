@@ -16,8 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class ChromeTest {
-
-    static WebDriver driver;
+    WebDriver driver;
 
     @BeforeAll
     static void setupAll() {
@@ -25,13 +24,19 @@ class ChromeTest {
     }
 
     @BeforeEach
-    void setup() {
 
+    public void setUp() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
+        options.addArguments("--headless=new");
         driver = new ChromeDriver(options);
+
+        options.addArguments("--disable-dev-shm-usage");
+
+        options.addArguments("--no-sandbox");
+
+
+        driver = new ChromeDriver(options);
+
     }
 
     @AfterEach
@@ -43,7 +48,7 @@ class ChromeTest {
     @Test
     void test() {
         driver.get("http://localhost:9999/");
-        driver.findElement(By.cssSelector("span[data-test-id=name] input")).sendKeys("Карен Карамян");
+        driver.findElement(By.cssSelector("span[data-test-id=name] input")).sendKeys("Дебагеров Дебаг");
         driver.findElement(By.cssSelector("span[data-test-id=phone] input")).sendKeys("+78969865123");
         driver.findElement(By.cssSelector("label[data-test-id=agreement]")).click();
         driver.findElement(By.className("button")).click();
